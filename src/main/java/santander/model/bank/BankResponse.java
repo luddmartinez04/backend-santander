@@ -1,32 +1,21 @@
 package santander.model.bank;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import santander.model.client.Client;
+import lombok.*;
 
-import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-@Entity
-@Table(name = "BANK")
+@Builder
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class Bank {
+@NoArgsConstructor
+public class BankResponse {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @NotNull
+
     private String name;
     @NotNull
     private String cuit;
@@ -40,6 +29,5 @@ public class Bank {
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updateDate;
-    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL)
-    private List<Client> clients = new ArrayList<>();
+
 }

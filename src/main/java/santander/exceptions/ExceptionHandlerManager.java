@@ -42,4 +42,13 @@ public class ExceptionHandlerManager {
         ErrorResponse errorResponse = new ErrorResponse(details, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(ClientNotFoundException.class)
+    public final ResponseEntity<ErrorResponse> handleClientNotFoundException(HttpServletRequest request, Exception exception){
+        List<String> details = new ArrayList<>();
+        details.add(exception.getLocalizedMessage());
+        ErrorResponse errorResponse = new ErrorResponse(details, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 }

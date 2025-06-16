@@ -1,0 +1,16 @@
+[
+  {
+    "name": "PEPE",
+    "idChannel": "onlinebanking",
+    "dni": "12345678",
+    "email": "pepe@gmail.com",
+    "bankId": 1
+  },
+  {
+    "name": "MARIA",
+    "idChannel": "onlinebanking",
+    "dni": "87654321",
+    "email": "maria@gmail.com",
+    "bankId": 2
+  }
+]

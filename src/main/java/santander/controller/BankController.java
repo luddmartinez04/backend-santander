@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
-import santander.model.bank.BankDto;
+import santander.model.bank.BankRequest;
+import santander.model.bank.BankResponse;
 import santander.service.BankService;
 
 import javax.validation.Valid;
@@ -22,42 +23,42 @@ public class BankController {
     private BankService bankService;
     private RestTemplate restTemplate;
 
-    @Operation(summary = "create in DB a bank")
+    @Operation(summary = "create bank record in DB")
     @PostMapping("/create/bank")
-    public ResponseEntity<BankDto> addBank(@Valid @RequestBody BankDto bankDto) {
-        BankDto bankDtoLoad = bankService.createBank(bankDto);
-        return new ResponseEntity<BankDto>(bankDtoLoad, HttpStatus.OK);
+    public ResponseEntity<BankResponse> addBank(@Valid @RequestBody BankRequest bankRequest) {
+        BankResponse bankResponse = bankService.createBank(bankRequest);
+        return new ResponseEntity<>(bankResponse, HttpStatus.OK);
     }
 
     @Operation(summary = "get all banks")
     @GetMapping("/banks")
-    public List<BankDto> getAllBanks() {
+    public List<BankResponse> getAllBanks() {
         return bankService.findAllBanks();
     }
 
 
     @Operation(summary = "get bank by id")
     @GetMapping("/bank/{id}")
-    public BankDto getBank(@PathVariable("id") Long id) {
+    public BankResponse getBank(@PathVariable("id") Long id) {
         return bankService.getBankById(id);
     }
 
 
     @Operation(summary = "update bank by request body")
-    @PutMapping("/update/bank")
-    public BankDto updateBank(@RequestBody() BankDto bankDto) {
-        return bankService.updateBank(bankDto);
+    @PutMapping("/update/bank/{id}")
+    public BankResponse updateBank(@Valid @RequestBody() BankRequest bankRequest, @PathVariable("id") Long id) {
+        return bankService.updateBank(bankRequest, id);
     }
 
 
     @Operation(summary = "delete bank by id")
     @DeleteMapping("/delete/bank/{id}")
-    public BankDto deleteBank(@PathVariable("id") Long id) {
+    public BankResponse deleteBank(@PathVariable("id") Long id) {
         return bankService.deleteBankById(id);
     }
 
     @GetMapping("/call-internal")
-    public List<BankDto> getAllBanksInternally() {
+    public List<BankResponse> getAllBanksInternally() {
         return bankService.findAllBanksInternally();
     }
 }

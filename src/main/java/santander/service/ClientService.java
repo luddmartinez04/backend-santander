@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import santander.exceptions.BankNotFoundException;
 import santander.exceptions.ClientNotFoundException;
+import santander.exceptions.ClientSaveErrorException;
 import santander.model.bank.Bank;
 import santander.model.client.Client;
 import santander.model.client.ClientRequest;
@@ -35,7 +36,7 @@ public class ClientService {
         try {
             clientSave = clientJpaRepository.save(client);
         } catch (Exception e) {
-            return null;
+            throw new ClientSaveErrorException(String.format("error saving client", e.getMessage()));
         }
 
         ClientResponse clientResponse = dozerMapper.map(clientSave, ClientResponse.class);

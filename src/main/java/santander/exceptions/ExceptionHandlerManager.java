@@ -51,4 +51,14 @@ public class ExceptionHandlerManager {
         ErrorResponse errorResponse = new ErrorResponse(details, HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(ClientSaveErrorException.class)
+    @ResponseBody
+    public  final ResponseEntity<ErrorResponse> handleClientSaveError(HttpServletRequest request, Exception exception){
+        List<String> details = new ArrayList<>();
+        details.add(exception.getLocalizedMessage());
+        ErrorResponse errorResponse = new ErrorResponse(details, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
